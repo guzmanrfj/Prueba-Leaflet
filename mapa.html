@@ -8,13 +8,25 @@
      crossorigin=""/>
     <link rel="stylesheet" type="text/css" href="mapa.css">
     <title>Mapa de Prueba Leaflet</title>
+    <h1>Mapa Plantilla Leaflet</h1>
+
+    <select name="select-location" id="select-location">
+        <option value="-1">Seleccione una ubicación</option>
+        <option value="20.72643480835135, -103.39179877237544">Basilica de Zapopan</option>
+        <option value="20.70491617040165, -103.32814636247528">Estadio Jalisco</option>
+        <option value="20.681906129355106, -103.46258172889787">Estadio Akron</option>
+        <option value="20.677452980307535, -103.34676966172462">Catedral de Guadalajara</option>
+
+    </select>
 </head>
-<body>
-    <div id="mapa"></div>
+<body id="cuerpo">
+    <div id="Mapa"></div>
     
-</body>
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
-    <script>src="mapa.js"</script>
+    <script src="mapa.js"></script>
+</body>
+    
 </html>
