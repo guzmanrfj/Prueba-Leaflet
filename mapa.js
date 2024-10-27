@@ -24,3 +24,19 @@ var carto_light = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}
 
 // Agregar escala
  new L.control.scale({imperial: false}).addTo(map);
+
+ // Configurar Popup
+function popup(feature,layer){
+  if(feature.properties && feature.properties.Folio){
+    layer.bindPopup("<strong>Número de Folio: </strong>" + feature.properties.Folio + "<br/>" + "<strong>Estatus Reporte: </strong>" + feature.properties.Estatus + "<br/>" + "<strong>Colonia: </strong>" + feature.properties.nombre + "<br/>" + "<strong>Cantidad de Reportes en la Colonia: </strong>" + feature.properties.Conteoxcol);
+  }
+}
+
+
+ // Agregar capa en formato GeoJson
+ L.geoJson(ReportesDom).addTo(map);
+
+ var ReportesDomJS = L.geoJson(ReportesDom,{
+     onEachFeature: popup
+ }).addTo(map);
+
