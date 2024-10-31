@@ -34,9 +34,9 @@ function popup(feature,layer){
 
 
  // Agregar capa en formato GeoJson
- L.geoJson(ReportesDom).addTo(map);
+ L.geoJson(reposept).addTo(map);
 
- var ReportesDomJS = L.geoJson(ReportesDom,{
+ var reposeptJS = L.geoJson(reposept,{
      onEachFeature: popup
  }).addTo(map);
 
