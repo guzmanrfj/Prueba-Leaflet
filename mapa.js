@@ -6,7 +6,7 @@ L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',{
 
   document.getElementById('select-location').addEventListener('change',function(e){
     let coords = e.target.value.split(",");
-    map.flyTo(coords,18);
+    map.flyTo(coords,17);
   })
 
 //Agregar mapa base del MiniMap
@@ -52,7 +52,7 @@ var camino = L.polyline(coord_camino,{
 // Agregar un marcador
 
 var marker_oficina = L.circleMarker(L.latLng(20.671651572197057, -103.34414647353464),{
-  radius: 20,
+  radius: 10,
   fillcolor: '#ff0000',
   color: 'green',
   weight: 2,
@@ -69,13 +69,13 @@ function popup(feature,layer){
 
 // Define un nuevo icono personalizado
 const customIcon = L.icon({
-  iconUrl: 'Iconos\Lum.png',  // Ruta del icono
-  iconSize: [12, 12],                // Tamaño del icono
+  iconUrl: 'Iconos/redflag.png',  // Ruta del icono
+  iconSize: [24, 24],                // Tamaño del icono
   iconAnchor: [12, 41],              // Punto de anclaje (el "puntero" del icono)
   popupAnchor: [0, -41]              // Punto de anclaje para el popup
 });
 
- //Agregar capa en formato GeoJson
+ //Agregar capa en formato GeoJson septiembre
  var reposept = L.geoJson(reposept, {
   pointToLayer: function(feature, latLng){
     return L.marker(latLng,{icon:customIcon});
@@ -84,6 +84,81 @@ const customIcon = L.icon({
   }).addTo(map);
 //L.geoJson(reposept).addTo(map);
 
+// cargando capa puntos octubre
+// Asegurémonos de que heatData está definido y tiene características
+if (repooct && repooct.features && Array.isArray(repooct.features)) {
+  // Extraemos los puntos de calor
+  var heatPoints = repooct.features.map(feature => {
+      // Aseguramos que el objeto `geometry` y `coordinates` existen y son válidos
+      if (feature.geometry && feature.geometry.coordinates && feature.geometry.coordinates.length === 2) {
+          var coordinates = feature.geometry.coordinates;
+          var intensity = feature.properties && feature.properties.intensity ? feature.properties.intensity : 1.0;
+          return [coordinates[1], coordinates[0], intensity];  // Latitud, Longitud, Intensidad
+      }
+  }).filter(Boolean);  // Filtramos cualquier punto que haya fallado
+
+  // Crea la capa de calor
+  var heatLayer = L.heatLayer(heatPoints, {
+      radius: 30,  // Ajusta el radio del calor
+      blur: 45,    // Ajusta el nivel de desenfoque
+      maxZoom: 17,  // Máximo nivel de zoom donde aparecerá el efecto
+      gradient:{0.00:'#fff5f0', 0.11:'#fee0d2', 0.22:'#fcbba1', 0.33:'#fc9272', 0.44:'#fb6a4a', 0.55:'#ef3b2c', 0.66:'#cb181d', 0.77:'#a50f15',1:'#67000d'}
+  }).addTo(map);
+} else {
+  console.error("El formato de heatData es incorrecto o no contiene 'features'");
+}
+// Cargar Puntos Octubre
+//icono personalizado 
+var circleIcon = L.divIcon({
+  className:'custom-circle-icon',
+  iconSize: [3,3],
+  iconAnchor:[5,5]
+});
+
+var repooctd = L.geoJson(repooct, {
+  pointToLayer: function(feature, latLng){
+    return L.marker(latLng,{
+      icon:circleIcon});
+  },
+  onEachFeature: popup
+  }).addTo(map);
+  console.log(repooct);
+
+
+
+
+
+//   var puntosCalor = repooct.heatLayer.features.map(feature => {
+//   var coordinates = feature.geometry.coordinates;
+//   var intensity = feature.properties.intensity || 1.0; // Usa intensidad, o 1 si no está especificado
+//   return [coordinates[1], coordinates[0], intensity];  // Latitud, Longitud, Intensidad
+// });
+
+// // Crea el mapa de calor
+// var heatLayer = L.heatLayer(puntosCalor, {
+//   radius: 25,  // Ajusta el radio del calor
+//   blur: 15,    // Ajusta el nivel de desenfoque
+//   maxZoom: 17  // Máximo nivel de zoom donde aparecerá el efecto
+// }).addTo(map);
+
+// fetch('Layers/repooct.js')  // Reemplaza con la ruta de tu archivo GeoJSON
+//     .then(response => response.json())
+//     .then(data => {
+//         // Extrae los puntos de datos del GeoJSON para el mapa de calor
+//         var heatData = data.features.map(feature => {
+//             var coordinates = feature.geometry.coordinates;
+//             var intensity = feature.properties.intensity || 1.0; // Intensity opcional
+//             return [coordinates[1], coordinates[0], intensity];  // Latitud, Longitud, Intensidad
+//         });
+
+//         // Crear el mapa de calor
+//         var heatLayer = L.heatLayer(heatData, {
+//             radius: 25,  // Ajusta el radio del calor
+//             blur: 15,    // Ajusta el nivel de desenfoque
+//             maxZoom: 17  // Máximo nivel de zoom donde aparecerá el efecto
+//         }).addTo(map);
+//       })
+//       .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
 // Agregar leyenda
 
 const legend = L.control.Legend({
@@ -97,7 +172,9 @@ const legend = L.control.Legend({
       label:'Coordinación',
       type: 'circle',
       radius: 6,
-      fillcolor: '#ff0000',
+      fill: true,
+      fillcolor: 'green',
+      fillOpacity:.5,
       color: 'green',
       weight: 2,
       layers: marker_oficina,
@@ -113,12 +190,24 @@ const legend = L.control.Legend({
    },{
     label: 'Reportes',
     type: "image",
-    url: "Iconos\Lum.png",
+    url: "Iconos/redflag.png",
     // radius: 6,
     // fillcolor: '#ffcc00', // Color para luminarias
     // color: 'black',
     // weight: 1,
-    layers: reposept, // Aquí usamos reposeptJS para luminarias
+    layers: reposept, // Aquí usamos reposeptJS para Reportes
+    inactive: false,
+   },{
+    label: 'Reportes Octubre',
+    type: "circle",
+    radius: 6,
+
+    stroke: true,
+    fill: true,
+    fillColor: 'yellow',
+    color: '#000000',
+    weight: 2,
+    layers: repooctd, // Aquí usamos reposeptJS para Reportes
     inactive: false,
    }]
 }).addTo(map);

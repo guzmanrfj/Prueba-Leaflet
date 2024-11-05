@@ -17,3 +17,11 @@ select{
     margin-bottom: 20px;
     margin-left: 20px;
 }
+
+.custom-circle-icon {
+    background-color: rgb(238, 255, 0);
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 3px;
+    height: 3px;
+}
