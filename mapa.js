@@ -82,7 +82,7 @@ const customIcon = L.icon({
   },
   onEachFeature: popup
   }).addTo(map);
-//L.geoJson(reposept).addTo(map);
+
 
 // cargando capa puntos octubre
 // Asegurémonos de que heatData está definido y tiene características
@@ -159,6 +159,54 @@ var repooctd = L.geoJson(repooct, {
 //         }).addTo(map);
 //       })
 //       .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
+
+
+//Agregar Limite Municipal
+
+// if (limitemu.features && limitemu.features.length > 0) {
+//   const feature = limitemu.features[0]; // Usamos solo el primer feature para la prueba
+
+//   if (feature.geometry.type === "MultiPolygon") {
+//     feature.geometry.coordinates.forEach((polygon, polyIndex) => {
+//       if (polygon[0]) {
+//         // Convertimos las coordenadas para Leaflet [lat, lon]
+//         const coordinates = polygon[0].map(coord => [coord[1], coord[0]]);
+        
+//         console.log(`Coordenadas del polígono ${polyIndex}:`, coordinates); // Verifica las coordenadas
+
+//         // Agrega el polígono al mapa
+//         L.polygon(coordinates, {
+//           color: 'blue',
+//           weight: 2,
+//           fillOpacity: 0.3,
+//         }).addTo(map);
+//       }
+//     });
+//   } else {
+//     console.warn("El primer feature no es un MultiPolygon.");
+//   }
+// } else {
+//   console.warn("limitemu está vacío o no tiene features.");
+// }
+const limites = limitemu.features[0];
+limites.geometry.coordinates.forEach((polygon, polyIndex) => {
+        (polygon[0]);
+        // Convertimos las coordenadas para Leaflet [lat, lon]
+        const coordinates = polygon[0].map(coord => [coord[1], coord[0]]);
+        
+        // Agrega el polígono al mapa
+        L.polygon(coordinates, {
+          color: 'blue',
+          weight: 2,
+          fillOpacity: 0,
+        }).addTo(map);
+      
+    });
+   
+
+
+
+  
 // Agregar leyenda
 
 const legend = L.control.Legend({
