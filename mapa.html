@@ -9,20 +9,42 @@
     <link rel="stylesheet" type="text/css" href="mapa.css">
     <link rel="stylesheet" type="text/css" href="Leaflet-MiniMap-master/dist/Control.MiniMap.min.css">
     <link rel="stylesheet" type="text/css" href="Leaflet.Legend-master\src\leaflet.legend.css">
-    <title>Mapa de Prueba Leaflet</title>
-    <h1>Mapa Plantilla Leaflet</h1>
+    <!-- <title>Mapa de Prueba Leaflet</title>
+    <h1>Mapa Plantilla Leaflet</h1> -->
+    <!-- <style>
+    html, cuerpo, #Mapa {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    </style> -->
+    <title>Mapa de Calor de Reportes sobre deficiencias en Recolección Domiciliaria</title>
 
-    <select name="select-location" id="select-location">
+    <!-- <select name="select-location" id="select-location">
         <option value="-1">Seleccione una ubicación</option>
         <option value="20.72247451686036, -103.39254896251934">Basilica de Zapopan</option>
         <option value="20.70491617040165, -103.32814636247528">Estadio Jalisco</option>
         <option value="20.681906129355106, -103.46258172889787">Estadio Akron</option>
         <option value="20.677452980307535, -103.34676966172462">Catedral de Guadalajara</option>
 
-    </select>
+    </select> -->
 </head>
 <body id="cuerpo">
-    <div id="Mapa"></div>
+    <h1>Mapa de Calor</h1>
+    <div id="Mapa">
+        
+            <!-- Logo en la esquina superior izquierda -->
+            <div id="logo-izquierda">
+                <img src="images\Servicios_Municipales.png" alt="Logo Izquierdo">
+            </div>
+
+            <!-- Logo en la esquina superior derecha -->
+            <div id="logo-derecha">
+                <img src="images\Escudo1.svg" alt="Logo Derecho">
+            </div>
+            
+    </div>
     
     
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
