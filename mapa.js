@@ -1,4 +1,8 @@
+//Se carga mapa en las coordenadas señaladas
+
 let map = L.map('Mapa').setView([20.677522170309935, -103.34692535828518],12)
+
+//Se especifica el tipo de mapa mediante el link
 
 L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',{
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -15,6 +19,7 @@ var carto_light = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
 // Agregar plugin MiniMap
+
   var minimap = new L.Control.MiniMap(carto_light,
     {
         toggleDisplay: true,
@@ -23,13 +28,9 @@ var carto_light = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}
     }).addTo(map);
 
 // Agregar escala
+
  new L.control.scale({imperial: false}).addTo(map);
 
- 
-
-// var reposeptJS = L.geoJson(reposept,{
-//     onEachFeature: popup
-// }).addTo(map);
 
  // Agregar coordenadas para dibujar una linea
 
@@ -45,11 +46,13 @@ var carto_light = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}
   [20.6748991, -103.3546647]
 ];
 
+// Se agregan las coordenadas descritas anteriormente en la variable camino para que se dibuje la linea
+
 var camino = L.polyline(coord_camino,{
   color: 'blue'  
 }).addTo(map);
 
-// Agregar un marcador
+// Agregar un marcador circular es una ubicación especifica
 
 var marker_oficina = L.circleMarker(L.latLng(20.671651572197057, -103.34414647353464),{
   radius: 10,
@@ -60,14 +63,16 @@ var marker_oficina = L.circleMarker(L.latLng(20.671651572197057, -103.3441464735
   fillOpacity: .5,
 }).addTo(map);
 
-// Configurar Popup
+// Configurar Popup para mostrar informacion d ela capa de reportes
+
 function popup(feature,layer){
   if(feature.properties && feature.properties.Folio){
     layer.bindPopup("<strong>Número de Folio: </strong>" + feature.properties.Folio + "<br/>" + "<strong>Estatus Reporte: </strong>" + feature.properties.Estatus + "<br/>" + "<strong>Colonia: </strong>" + feature.properties.nombre + "<br/>" + "<strong>Cantidad de Reportes en la Colonia: </strong>" + feature.properties.Conteoxcol);
   }
 }
 
-// Define un nuevo icono personalizado
+// Define un nuevo icono personalizado para la capa reportes
+
 const customIcon = L.icon({
   iconUrl: 'Iconos/redflag.png',  // Ruta del icono
   iconSize: [24, 24],                // Tamaño del icono
@@ -75,7 +80,8 @@ const customIcon = L.icon({
   popupAnchor: [0, -41]              // Punto de anclaje para el popup
 });
 
- //Agregar capa en formato GeoJson septiembre
+ //Agregar capa en formato GeoJson para reportes de septiembre
+
  var reposept = L.geoJson(reposept, {
   pointToLayer: function(feature, latLng){
     return L.marker(latLng,{icon:customIcon});
@@ -84,7 +90,8 @@ const customIcon = L.icon({
   }).addTo(map);
 
 
-// cargando capa puntos octubre
+// cargando capa puntos de reportes de octubre para generar mapa de calor
+
 // Asegurémonos de que heatData está definido y tiene características
 if (repooct && repooct.features && Array.isArray(repooct.features)) {
   // Extraemos los puntos de calor
@@ -108,7 +115,7 @@ if (repooct && repooct.features && Array.isArray(repooct.features)) {
   console.error("El formato de heatData es incorrecto o no contiene 'features'");
 }
 // Cargar Puntos Octubre
-//icono personalizado 
+  //icono personalizado 
 var circleIcon = L.divIcon({
   className:'custom-circle-icon',
   iconSize: [3,3],
@@ -126,68 +133,8 @@ var repooctd = L.geoJson(repooct, {
 
 
 
-
-
-//   var puntosCalor = repooct.heatLayer.features.map(feature => {
-//   var coordinates = feature.geometry.coordinates;
-//   var intensity = feature.properties.intensity || 1.0; // Usa intensidad, o 1 si no está especificado
-//   return [coordinates[1], coordinates[0], intensity];  // Latitud, Longitud, Intensidad
-// });
-
-// // Crea el mapa de calor
-// var heatLayer = L.heatLayer(puntosCalor, {
-//   radius: 25,  // Ajusta el radio del calor
-//   blur: 15,    // Ajusta el nivel de desenfoque
-//   maxZoom: 17  // Máximo nivel de zoom donde aparecerá el efecto
-// }).addTo(map);
-
-// fetch('Layers/repooct.js')  // Reemplaza con la ruta de tu archivo GeoJSON
-//     .then(response => response.json())
-//     .then(data => {
-//         // Extrae los puntos de datos del GeoJSON para el mapa de calor
-//         var heatData = data.features.map(feature => {
-//             var coordinates = feature.geometry.coordinates;
-//             var intensity = feature.properties.intensity || 1.0; // Intensity opcional
-//             return [coordinates[1], coordinates[0], intensity];  // Latitud, Longitud, Intensidad
-//         });
-
-//         // Crear el mapa de calor
-//         var heatLayer = L.heatLayer(heatData, {
-//             radius: 25,  // Ajusta el radio del calor
-//             blur: 15,    // Ajusta el nivel de desenfoque
-//             maxZoom: 17  // Máximo nivel de zoom donde aparecerá el efecto
-//         }).addTo(map);
-//       })
-//       .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
-
-
 //Agregar Limite Municipal
 
-// if (limitemu.features && limitemu.features.length > 0) {
-//   const feature = limitemu.features[0]; // Usamos solo el primer feature para la prueba
-
-//   if (feature.geometry.type === "MultiPolygon") {
-//     feature.geometry.coordinates.forEach((polygon, polyIndex) => {
-//       if (polygon[0]) {
-//         // Convertimos las coordenadas para Leaflet [lat, lon]
-//         const coordinates = polygon[0].map(coord => [coord[1], coord[0]]);
-        
-//         console.log(`Coordenadas del polígono ${polyIndex}:`, coordinates); // Verifica las coordenadas
-
-//         // Agrega el polígono al mapa
-//         L.polygon(coordinates, {
-//           color: 'blue',
-//           weight: 2,
-//           fillOpacity: 0.3,
-//         }).addTo(map);
-//       }
-//     });
-//   } else {
-//     console.warn("El primer feature no es un MultiPolygon.");
-//   }
-// } else {
-//   console.warn("limitemu está vacío o no tiene features.");
-// }
 const limites = limitemu.features[0];
 limites.geometry.coordinates.forEach((polygon, polyIndex) => {
         (polygon[0]);
@@ -205,12 +152,11 @@ limites.geometry.coordinates.forEach((polygon, polyIndex) => {
    
 
 
-
-  
 // Agregar leyenda
 
 const legend = L.control.Legend({
-  position:'bottomright',
+  title:'Leyenda',
+  position:'topright',
   collapsed: false,
   symbolWidth:24,
   opacity:1,
