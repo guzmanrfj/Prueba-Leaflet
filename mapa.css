@@ -3,7 +3,7 @@
     width: 100vw;
 }
 */
-#cuerpo {
+/* #cuerpo {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -15,7 +15,16 @@
     height: 100%;
     padding: 0;
     margin: 0;
-}
+} */
+
+html,
+#cuerpo,
+#Mapa {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
 h1{
     color:#fb9c6e;
     font-family: Arial, Helvetica, sans-serif;
@@ -33,4 +42,31 @@ select{
     border-radius: 50%;
     width: 3px;
     height: 3px;
+}
+
+/* Estilo para el logo en la esquina superior izquierda */
+        
+#logo-izquierda {
+    position: absolute;
+    top: 10px;
+    left: 80px;
+    z-index: 1000; /* Asegura que el logo quede por encima del mapa */
+}
+
+#logo-izquierda img {
+    width: 200px; /* Ajusta el tamaño del logo según tus necesidades */
+    height: auto; /* Mantén la proporción original del logo */
+}
+
+/* Estilo para el logo en la esquina superior derecha */
+#logo-derecha {
+    position: absolute;
+    top: 10px;
+    right: 80px;
+    z-index: 1000; /* Asegura que el logo quede por encima del mapa */
+}
+
+#logo-derecha img {
+    width: 100px; /* Ajusta el tamaño del logo según tus necesidades */
+    height: auto; /* Mantén la proporción original del logo */
 }

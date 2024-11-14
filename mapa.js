@@ -1,6 +1,6 @@
 //Se carga mapa en las coordenadas señaladas
 
-let map = L.map('Mapa').setView([20.677522170309935, -103.34692535828518],12)
+var map = L.map('Mapa').setView([20.677522170309935, -103.34692535828518],12)
 
 //Se especifica el tipo de mapa mediante el link
 
@@ -12,6 +12,65 @@ L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',{
     let coords = e.target.value.split(",");
     map.flyTo(coords,17);
   })
+
+// remove popup's row if "visible-with-data"
+function removeEmptyRowsFromPopupContent(content, feature) {
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = content;
+  var rows = tempDiv.querySelectorAll('tr');
+  for (var i = 0; i < rows.length; i++) {
+      var td = rows[i].querySelector('td.visible-with-data');
+      var key = td ? td.id : '';
+      if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+          rows[i].parentNode.removeChild(rows[i]);
+      }
+  }
+  return tempDiv.innerHTML;
+}  
+
+// add class to format popup if it contains media
+function addClassToPopupIfMedia(content, popup) {
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = content;
+  if (tempDiv.querySelector('td img')) {
+      popup._contentNode.classList.add('media');
+      // Delay to force the redraw
+      setTimeout(function () {
+          popup.update();
+      }, 10);
+  } else {
+      popup._contentNode.classList.remove('media');
+  }
+}
+
+//Agregar Titulo en parte superior derecha
+var title = new L.Control({ 'position': 'topright' });
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Mapa de Prueba</h2>';
+            };
+            title.addTo(map);
+
+            var abstract = new L.Control({ 'position': 'bottomright' });
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                    'leaflet-control abstract');
+                this._div.id = 'abstract'
+
+                abstract.show();
+                return this._div;
+            };
+            abstract.show = function () {
+                this._div.classList.remove("abstract");
+                this._div.classList.add("abstractUncollapsed");
+                this._div.innerHTML = 'Luminarias por Zonas';
+            };
+            abstract.addTo(map);
+
 
 //Agregar mapa base del MiniMap
 
