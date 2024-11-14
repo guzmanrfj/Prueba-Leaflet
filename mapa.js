@@ -8,83 +8,25 @@ L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',{
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  document.getElementById('select-location').addEventListener('change',function(e){
-    let coords = e.target.value.split(",");
-    map.flyTo(coords,17);
-  })
-
-// remove popup's row if "visible-with-data"
-function removeEmptyRowsFromPopupContent(content, feature) {
-  var tempDiv = document.createElement('div');
-  tempDiv.innerHTML = content;
-  var rows = tempDiv.querySelectorAll('tr');
-  for (var i = 0; i < rows.length; i++) {
-      var td = rows[i].querySelector('td.visible-with-data');
-      var key = td ? td.id : '';
-      if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
-          rows[i].parentNode.removeChild(rows[i]);
-      }
-  }
-  return tempDiv.innerHTML;
-}  
-
-// add class to format popup if it contains media
-function addClassToPopupIfMedia(content, popup) {
-  var tempDiv = document.createElement('div');
-  tempDiv.innerHTML = content;
-  if (tempDiv.querySelector('td img')) {
-      popup._contentNode.classList.add('media');
-      // Delay to force the redraw
-      setTimeout(function () {
-          popup.update();
-      }, 10);
-  } else {
-      popup._contentNode.classList.remove('media');
-  }
-}
-
-//Agregar Titulo en parte superior derecha
-var title = new L.Control({ 'position': 'topright' });
-            title.onAdd = function (map) {
-                this._div = L.DomUtil.create('div', 'info');
-                this.update();
-                return this._div;
-            };
-            title.update = function () {
-                this._div.innerHTML = '<h2>Mapa de Prueba</h2>';
-            };
-            title.addTo(map);
-
-            var abstract = new L.Control({ 'position': 'bottomright' });
-            abstract.onAdd = function (map) {
-                this._div = L.DomUtil.create('div',
-                    'leaflet-control abstract');
-                this._div.id = 'abstract'
-
-                abstract.show();
-                return this._div;
-            };
-            abstract.show = function () {
-                this._div.classList.remove("abstract");
-                this._div.classList.add("abstractUncollapsed");
-                this._div.innerHTML = 'Luminarias por Zonas';
-            };
-            abstract.addTo(map);
-
+  // document.getElementById('select-location').addEventListener('change',function(e){
+  //   let coords = e.target.value.split(",");
+  //   map.flyTo(coords,17);
+  // })
 
 //Agregar mapa base del MiniMap
 
-var carto_light = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',{
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  });
+// var carto_light = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',{
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//   });
 // Agregar plugin MiniMap
 
-  var minimap = new L.Control.MiniMap(carto_light,
-    {
-        toggleDisplay: true,
-        minimized: false,
-        position: "bottomleft"
-    }).addTo(map);
+  // var minimap = new L.Control.MiniMap(carto_light,
+  //   {
+  //       toggleDisplay: true,
+  //       minimized: false,
+  //       position: "bottomleft"
+        
+  //   }).addTo(map);
 
 // Agregar escala
 
@@ -133,8 +75,8 @@ function popup(feature,layer){
 // Define un nuevo icono personalizado para la capa reportes
 
 const customIcon = L.icon({
-  iconUrl: 'Iconos/redflag.png',  // Ruta del icono
-  iconSize: [24, 24],                // Tamaño del icono
+  iconUrl: 'Iconos/bell.png',  // Ruta del icono
+  iconSize: [18, 18],                // Tamaño del icono
   iconAnchor: [12, 41],              // Punto de anclaje (el "puntero" del icono)
   popupAnchor: [0, -41]              // Punto de anclaje para el popup
 });
@@ -202,7 +144,7 @@ limites.geometry.coordinates.forEach((polygon, polyIndex) => {
         
         // Agrega el polígono al mapa
         L.polygon(coordinates, {
-          color: 'blue',
+          color: 'black',
           weight: 2,
           fillOpacity: 0,
         }).addTo(map);
@@ -215,11 +157,15 @@ limites.geometry.coordinates.forEach((polygon, polyIndex) => {
 
 const legend = L.control.Legend({
   title:'Leyenda',
-  position:'topright',
+  position:'bottomright',
+  color: '#ffffff',
   collapsed: false,
   symbolWidth:24,
-  opacity:1,
+  opacity:.5,
+  stroke:false,
   column:1,
+  opacity:.5,
+  weight: 0,
   legends:[
     {
       label:'Coordinación',
@@ -243,7 +189,7 @@ const legend = L.control.Legend({
    },{
     label: 'Reportes',
     type: "image",
-    url: "Iconos/redflag.png",
+    url: "Iconos/bell.png",
     // radius: 6,
     // fillcolor: '#ffcc00', // Color para luminarias
     // color: 'black',
@@ -254,13 +200,18 @@ const legend = L.control.Legend({
     label: 'Reportes Octubre',
     type: "circle",
     radius: 6,
-
     stroke: true,
     fill: true,
     fillColor: 'yellow',
     color: '#000000',
     weight: 2,
     layers: repooctd, // Aquí usamos reposeptJS para Reportes
+    inactive: false,
+   },{
+    label: 'Mapa de calor',
+    type: "image",
+    url: "Iconos/redflag.png",
+    layers: heatLayer, 
     inactive: false,
    }]
 }).addTo(map);

@@ -3,19 +3,7 @@
     width: 100vw;
 }
 */
-/* #cuerpo {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-} 
-#Mapa {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-} */
+
 
 html,
 #cuerpo,
@@ -26,9 +14,10 @@ html,
             margin: 0;
         }
 h1{
-    color:#fb9c6e;
+    color:#000000;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    
 }
 
 select{
@@ -49,24 +38,44 @@ select{
 #logo-izquierda {
     position: absolute;
     top: 10px;
-    left: 80px;
+    left: 60px;
     z-index: 1000; /* Asegura que el logo quede por encima del mapa */
 }
 
 #logo-izquierda img {
-    width: 200px; /* Ajusta el tamaño del logo según tus necesidades */
+    width: 180px; /* Ajusta el tamaño del logo según tus necesidades */
     height: auto; /* Mantén la proporción original del logo */
+}
+
+/* Estilo para el titulo del centro */
+#titulo-mapa{
+    position: fixed;
+    flex: 1;
+    top: 10px;
+    left: 29.5%;
+    transform: translateX(-15%);
+    /* white-space: nowrap; Evita que el texto se corte en varias líneas */
+    /* overflow: hidden; */
+    text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
+    padding: 0px 20px;     /* Espaciado interno del div */
+    background-color: #ffffff; /* Fondo del div */
+    opacity: .5;
+    border: 2px solid #c2c2c2; /* Marco alrededor del div */
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar efecto de elevación */
+    z-index: 1000;
 }
 
 /* Estilo para el logo en la esquina superior derecha */
 #logo-derecha {
     position: absolute;
     top: 10px;
-    right: 80px;
+    right: 60px;
     z-index: 1000; /* Asegura que el logo quede por encima del mapa */
 }
 
 #logo-derecha img {
-    width: 100px; /* Ajusta el tamaño del logo según tus necesidades */
+    width: 80px; /* Ajusta el tamaño del logo según tus necesidades */
     height: auto; /* Mantén la proporción original del logo */
 }
+
