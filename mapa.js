@@ -35,34 +35,34 @@ L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',{
 
  // Agregar coordenadas para dibujar una linea
 
- var coord_camino =[
-  [20.6715363, -103.3443838],
-  [20.6720759, -103.3455962],
-  [20.6723795, -103.3463606],
-  [20.6732328, -103.3464035],
-  [20.6736242, -103.3464303],
-  [20.6736142, -103.3474066],
-  [20.673564, -103.3491608 ],
-  [20.6734737, -103.3546647],
-  [20.6748991, -103.3546647]
-];
+//  var coord_camino =[
+//   [20.6715363, -103.3443838],
+//   [20.6720759, -103.3455962],
+//   [20.6723795, -103.3463606],
+//   [20.6732328, -103.3464035],
+//   [20.6736242, -103.3464303],
+//   [20.6736142, -103.3474066],
+//   [20.673564, -103.3491608 ],
+//   [20.6734737, -103.3546647],
+//   [20.6748991, -103.3546647]
+// ];
 
 // Se agregan las coordenadas descritas anteriormente en la variable camino para que se dibuje la linea
 
-var camino = L.polyline(coord_camino,{
-  color: 'blue'  
-}).addTo(map);
+// var camino = L.polyline(coord_camino,{
+//   color: 'blue'  
+// }).addTo(map);
 
 // Agregar un marcador circular es una ubicación especifica
 
-var marker_oficina = L.circleMarker(L.latLng(20.671651572197057, -103.34414647353464),{
-  radius: 10,
-  fillcolor: '#ff0000',
-  color: 'green',
-  weight: 2,
-  opacity:1,
-  fillOpacity: .5,
-}).addTo(map);
+// var marker_oficina = L.circleMarker(L.latLng(20.671651572197057, -103.34414647353464),{
+//   radius: 10,
+//   fillcolor: '#ff0000',
+//   color: 'green',
+//   weight: 2,
+//   opacity:1,
+//   fillOpacity: .5,
+// }).addTo(map);
 
 // Configurar Popup para mostrar informacion d ela capa de reportes
 
@@ -74,21 +74,21 @@ function popup(feature,layer){
 
 // Define un nuevo icono personalizado para la capa reportes
 
-const customIcon = L.icon({
-  iconUrl: 'Iconos/bell.png',  // Ruta del icono
-  iconSize: [18, 18],                // Tamaño del icono
-  iconAnchor: [12, 41],              // Punto de anclaje (el "puntero" del icono)
-  popupAnchor: [0, -41]              // Punto de anclaje para el popup
-});
+// const customIcon = L.icon({
+//   iconUrl: 'Iconos/bell.png',  // Ruta del icono
+//   iconSize: [18, 18],                // Tamaño del icono
+//   iconAnchor: [12, 41],              // Punto de anclaje (el "puntero" del icono)
+//   popupAnchor: [0, -41]              // Punto de anclaje para el popup
+// });
 
  //Agregar capa en formato GeoJson para reportes de septiembre
 
- var reposept = L.geoJson(reposept, {
-  pointToLayer: function(feature, latLng){
-    return L.marker(latLng,{icon:customIcon});
-  },
-  onEachFeature: popup
-  }).addTo(map);
+//  var reposept = L.geoJson(reposept, {
+//   pointToLayer: function(feature, latLng){
+//     return L.marker(latLng,{icon:customIcon});
+//   },
+//   onEachFeature: popup
+//   }).addTo(map);
 
 
 // cargando capa puntos de reportes de octubre para generar mapa de calor
@@ -167,52 +167,53 @@ const legend = L.control.Legend({
   opacity:.5,
   weight: 0,
   legends:[
-    {
-      label:'Coordinación',
-      type: 'circle',
-      radius: 6,
-      fill: true,
-      fillcolor: 'green',
-      fillOpacity:.5,
-      color: 'green',
-      weight: 2,
-      layers: marker_oficina,
-      inactive: false,
-  },{
-      label:'Coordinación Camino',
-      type: 'polyline',
-      fillcolor: 'blue',
-      color: 'blue',
-      weight: 2,
-      layers: camino,
-      inactive: false,
-   },{
-    label: 'Reportes',
-    type: "image",
-    url: "Iconos/bell.png",
-    // radius: 6,
-    // fillcolor: '#ffcc00', // Color para luminarias
-    // color: 'black',
-    // weight: 1,
-    layers: reposept, // Aquí usamos reposeptJS para Reportes
-    inactive: false,
-   },{
-    label: 'Reportes Octubre',
-    type: "circle",
-    radius: 6,
-    stroke: true,
-    fill: true,
-    fillColor: 'yellow',
-    color: '#000000',
-    weight: 2,
-    layers: repooctd, // Aquí usamos reposeptJS para Reportes
-    inactive: false,
-   },{
-    label: 'Mapa de calor',
-    type: "image",
-    url: "Iconos/redflag.png",
-    layers: heatLayer, 
-    inactive: false,
+  //   {
+  //     label:'Coordinación',
+  //     type: 'circle',
+  //     radius: 6,
+  //     fill: true,
+  //     fillcolor: 'green',
+  //     fillOpacity:.5,
+  //     color: 'green',
+  //     weight: 2,
+  //     layers: marker_oficina,
+  //     inactive: false,
+  // },{
+  //     label:'Coordinación Camino',
+  //     type: 'polyline',
+  //     fillcolor: 'blue',
+  //     color: 'blue',
+  //     weight: 2,
+  //     layers: camino,
+  //     inactive: false,
+  //  },{
+  //     label: 'Reportes',
+  //     type: "image",
+  //     url: "Iconos/bell.png",
+  //     radius: 6,
+  //     fillcolor: '#ffcc00', // Color para luminarias
+  //     color: 'black',
+  //     weight: 1,
+  //     layers: reposept, // Aquí usamos reposeptJS para Reportes
+  //     inactive: false,
+  //  },
+        {
+         label: 'Reportes Octubre',
+         type: "circle",
+         radius: 6,
+         stroke: true,
+         fill: true,
+         fillColor: 'yellow',
+         color: '#000000',
+         weight: 2,
+         layers: repooctd, // Aquí usamos reposeptJS para Reportes
+         inactive: false,
+      },{
+         label: 'Mapa de calor',
+         type: "image",
+         url: "Iconos/redflag.png",
+         layers: heatLayer, 
+         inactive: false,
    }]
 }).addTo(map);
 

@@ -52,9 +52,9 @@ select{
 
     position: fixed;
     flex: 1;
-    top: 10px;
+    top: 20px;
     left: 29.5%;
-    transform: translateX(-15%);
+    transform: translateX(-5%);
     /* white-space: nowrap; Evita que el texto se corte en varias líneas */
     /* overflow: hidden; */
     /* text-overflow: ellipsis; Muestra "..." si el texto es muy largo */
